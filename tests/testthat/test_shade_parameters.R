@@ -1,0 +1,26 @@
+test_that("Test shade parameters: ", {
+
+  r <- raster(ncol=10, nrow=10)
+  values(r) <- runif(ncell(r))
+  crs(r) <- "+proj=krovak +lat_0=49.5 +lon_0=24.83333333333333 +alpha=30.28813975277778 +k=0.9999
+  +x_0=0 +y_0=0 +ellps=bessel +units=m +no_defs"
+
+  expect_warning(shade(r), "Date is missing.")
+  expect_warning(shade(r), "Sun elevation not set")
+  expect_warning(shade(r), "Search distance not set")
+
+  expect_error(shade(r, date = "asdfg"), "can not be converted to date")
+
+  expect_error(shade(r, sun_elevation = "midnight"), "Unknown sun_evelation character")
+
+  expect_error(shade(r, sun_elevation = -1), "Sun elevation must be from range 0 - 90")
+  expect_error(shade(r, sun_elevation = 91), "Sun elevation must be from range 0 - 90")
+
+  expect_error(shade(r, sun_azimuth = -1), "Sun azimuth must be from range 0 - 360")
+  expect_error(shade(r, sun_azimuth = 361), "Sun azimuth must be from range 0 - 360")
+
+  expect_warning(shade(r, date = "2018-03-21" , sun_azimuth = 165),
+               "is considered more important and will be used")
+
+  expect_warning(shade(r), "Search distance not set")
+})
