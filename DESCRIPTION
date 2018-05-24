@@ -7,9 +7,9 @@ Authors@R: c(person("Jan", "Caha", email = "cahik@atlas.cz",
   role = c("aut", "cre")))
 Maintainer: Jan Caha <cahik@atlas.cz>
 Description: The package rasterShade is just a wrapper around function in rayshader package. 
-The rasterShade package allows using rayshader algorithm directly on spatial data in form of Raster.
-The package tries to set "reasonable" default values for parameters in rayshadering algorithm.
-These default values are based on real world shadows that can be seen in nature.
+    The rasterShade package allows using rayshader algorithm directly on spatial data in form of Raster.
+    The package tries to set "reasonable" default values for parameters in rayshadering algorithm.
+    These default values are based on real world shadows that can be seen in nature.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
