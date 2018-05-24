@@ -18,6 +18,9 @@
 #' from date and sun elevation.
 #' @param search_distance Distance in which sun blocking objects are searched for, specified in map
 #' units. Default value is 200 map units.
+#' @param light_intensity Boolean value indicating if Lambertian reflectance shoud be used to
+#' determine surfaces facing directly to sun. Default value is \code{FALSE}. Package
+#' \link[rayshader]{rayshade} names this parameter \code{lambert}.
 #'
 #' @return Object of class \linkS4class{Raster}.
 #' @export
@@ -27,12 +30,13 @@
 #' @importFrom suncalc getSunlightPosition getSunlightTimes
 #' @importFrom rayshader rayshade
 #'
-shade <- function(raster, date, sun_elevation, sun_azimuth, search_distance) {
+shade <- function(raster, date, sun_elevation, sun_azimuth, search_distance, light_intensity) {
   UseMethod("shade", raster)
 }
 
 #' @export
-shade.RasterLayer <- function(raster, date, sun_elevation, sun_azimuth, search_distance) {
+shade.RasterLayer <- function(raster, date, sun_elevation, sun_azimuth, search_distance,
+                              light_intensity = FALSE) {
 
   # check if raster is projected to ensure that the calculation is done correctly
   if (!is.projected(crs(raster))) {
@@ -180,7 +184,7 @@ shade.RasterLayer <- function(raster, date, sun_elevation, sun_azimuth, search_d
                       anglebreaks = sun_elevation,
                       sunangle = sun_azimuth,
                       maxsearch = search_distance,
-                      lambert = FALSE,
+                      lambert = light_intensity,
                       multicore = TRUE,
                       remove_edges = FALSE)
 

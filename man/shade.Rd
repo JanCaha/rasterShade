@@ -4,24 +4,32 @@
 \alias{shade}
 \title{Function for calculation of rayshade on raster data}
 \usage{
-shade(raster, date, sun_elevation, sun_azimuth, search_distance)
+shade(raster, date, sun_elevation, sun_azimuth, search_distance,
+  light_intensity)
 }
 \arguments{
 \item{raster}{Object of class \linkS4class{Raster}.}
 
-\item{date}{Date specified as \code{character} in form \code{YYYY-MM-DD}.}
+\item{date}{Date specified as \code{character} in form \code{YYYY-MM-DD}. Default value is
+spring equinox (2018-03-20), when the sun is in the mean position.}
 
 \item{sun_elevation}{Either numeric value, from range 0 - 90, with 0 being sun elevation directly
 on horizon while 90 means that sun is directly above the surface, or one of text values:
 \code{"noon", "sunrise", "sunset", "goldenHour", "goldenHourEnd"}. The textual representation is
 used to determine sun elevation using function \link[suncalc]{getSunlightPosition}. Value
-\code{"sunrise"} represents end of sunrise, while \code{"sunset"} represents start of sunset.}
+\code{"sunrise"} represents end of sunrise, while \code{"sunset"} represents start of sunset.
+Default value is \code{"noon"}.}
 
 \item{sun_azimuth}{Numeric value that specifies azimuth from which the sun is shining on the
-surface.}
+surface. Value has to be from the range 0 - 360. If not specified the sun azimuth is calculated
+from date and sun elevation.}
 
 \item{search_distance}{Distance in which sun blocking objects are searched for, specified in map
-units.}
+units. Default value is 200 map units.}
+
+\item{light_intensity}{Boolean value indicating if Lambertian reflectance shoud be used to
+determine surfaces facing directly to sun. Default value is \code{FALSE}. Package
+\link[rayshader]{rayshade} names this parameter \code{lambert}.}
 }
 \value{
 Object of class \linkS4class{Raster}.
