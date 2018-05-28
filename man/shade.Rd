@@ -4,21 +4,27 @@
 \alias{shade}
 \title{Function for calculation of rayshade on raster data}
 \usage{
-shade(raster, date, sun_elevation, sun_azimuth, search_distance,
-  light_intensity)
+shade(surface_raster, date, time, tzone, sun_elevation, sun_azimuth,
+  search_distance, light_intensity, verbose)
 }
 \arguments{
-\item{raster}{Object of class \linkS4class{Raster}.}
+\item{surface_raster}{Object of class \linkS4class{Raster}.}
 
 \item{date}{Date specified as \code{character} in form \code{YYYY-MM-DD}. Default value is
 spring equinox (2018-03-20), when the sun is in the mean position.}
 
-\item{sun_elevation}{Either numeric value, from range 0 - 90, with 0 being sun elevation directly
-on horizon while 90 means that sun is directly above the surface, or one of text values:
+\item{time}{Either character representation of time (in format \code{HH:MM:SS}) or one of text values:
 \code{"noon", "sunrise", "sunset", "goldenHour", "goldenHourEnd"}. The textual representation is
 used to determine sun elevation using function \link[suncalc]{getSunlightPosition}. Value
 \code{"sunrise"} represents end of sunrise, while \code{"sunset"} represents start of sunset.
 Default value is \code{"noon"}.}
+
+\item{tzone}{a character string that specifies which time zone to parse the date with.
+The string must be a time zone that is recognized by the user's OS. If no time zone is given the default
+UTC is used.}
+
+\item{sun_elevation}{Numeric value, from range 0 - 90, with 0 being sun elevation directly
+on horizon while 90 means that sun is directly above the surface.}
 
 \item{sun_azimuth}{Numeric value that specifies azimuth from which the sun is shining on the
 surface. Value has to be from the range 0 - 360. If not specified the sun azimuth is calculated
@@ -30,6 +36,8 @@ units. Default value is 200 map units.}
 \item{light_intensity}{Boolean value indicating if Lambertian reflectance shoud be used to
 determine surfaces facing directly to sun. Default value is \code{FALSE}. Package
 \link[rayshader]{rayshade} names this parameter \code{lambert}.}
+
+\item{verbose}{Should informative message be printed? Default \code{FALSE}.}
 }
 \value{
 Object of class \linkS4class{Raster}.
