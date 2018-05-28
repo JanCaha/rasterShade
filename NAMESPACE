@@ -2,7 +2,13 @@
 
 S3method(shade,RasterLayer)
 export(shade)
+importFrom(lubridate,hms)
+importFrom(lubridate,is.period)
+importFrom(lubridate,with_tz)
+importFrom(lubridate,ymd)
+importFrom(lubridate,ymd_hms)
 importFrom(raster,"values<-")
+importFrom(raster,as.matrix)
 importFrom(raster,bandnr)
 importFrom(raster,crs)
 importFrom(rayshader,rayshade)

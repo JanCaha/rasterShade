@@ -1,8 +1,8 @@
 Package: rasterShade
 Type: Package
 Title: Wrapper around rayshader package 
-Version: 0.1.2
-Date: 2018-05-21
+Version: 0.2.2
+Date: 2018-05-28
 Authors@R: c(person("Jan", "Caha", email = "cahik@atlas.cz",
   role = c("aut", "cre")))
 Maintainer: Jan Caha <cahik@atlas.cz>
@@ -19,6 +19,7 @@ Imports:
     raster,
     sp,
     suncalc,
+    lubridate,
     rayshader (>= 0.2.1)
 Suggests:
     knitr,
