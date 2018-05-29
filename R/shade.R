@@ -30,7 +30,7 @@
 #' @return Object of class \linkS4class{Raster}.
 #' @export
 #'
-#' @importFrom sp CRS SpatialPoints coordinates spTransform is.projected
+#' @importFrom sp CRS SpatialPoints coordinates spTransform is.projected bbox
 #' @importFrom raster bandnr crs values<- as.matrix
 #' @importFrom suncalc getSunlightPosition getSunlightTimes
 #' @importFrom rayshader rayshade
@@ -82,7 +82,7 @@ shade.RasterLayer <- function(surface_raster, date, time, tzone, sun_elevation, 
          call. = FALSE)
   }
   else{
-    date = ymd(date)
+    date <- ymd(date)
   }
 
   # if no time is specified use noon
@@ -118,7 +118,7 @@ shade.RasterLayer <- function(surface_raster, date, time, tzone, sun_elevation, 
     }
   }
   else{
-    time = hms(time, quiet = TRUE)
+    time <- hms(time, quiet = TRUE)
   }
 
   # set default time zone if necessary
@@ -228,7 +228,8 @@ shade.RasterLayer <- function(surface_raster, date, time, tzone, sun_elevation, 
     sun_azimuth <- ifelse(sun_azimuth >= 0, sun_azimuth + 180, 180 + sun_azimuth) - 90
 
     if (verbose) {
-      message(paste0("The calculation of sun position is done for ", with_tz(date_time, tzone = "UTC"),
+      message(paste0("The calculation of sun position is done for ",
+                     with_tz(date_time, tzone = "UTC"),
                      " in UTC timezone."))
     }
   }
