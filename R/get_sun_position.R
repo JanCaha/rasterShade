@@ -35,7 +35,7 @@ get_sun_position <- function(date, time, tzone = "UTC", lat, lon){
   # logical checks for latitude
   if (!is.numeric(lat)) {
     stop(paste0("Latitude must be numeric. It is: ", class(lat), "."))
-  }else if ( -90 <= lat & lat <= 90) {
+  }else if (!(-90 <= lat & lat <= 90)) {
     stop(paste0("Latitude must be from range (-90,90), the current value (",
                 lat, ") is not from this range."))
   }
@@ -43,7 +43,7 @@ get_sun_position <- function(date, time, tzone = "UTC", lat, lon){
   # logical checks for longtitude
   if (!is.numeric(lon)) {
     stop(paste0("Longitude must be numeric. It is: ", class(lon), "."))
-  }else if ( -180 <= lon & lon <= 180) {
+  }else if (!(-180 <= lon & lon <= 180)) {
     stop(paste0("Longitude must be from range (-180,180), the current value (",
                 lon, ") is not from this range."))
   }
