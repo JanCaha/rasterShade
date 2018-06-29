@@ -4,7 +4,7 @@ The package rasterShade is just a wrapper around function in [rayshader](https:/
 
 ## Installation
 
-First you need to install [rayshader](https://github.com/tylermorganwall/rayshader) package from GitHub. The description of this package can be found in this [great blogpost](http://www.tylermw.com/throwing-shade/).
+First you need to install [rayshader](https://github.com/tylermorganwall/rayshader) package from GitHub. The description of this package can be found in this [great blogpost](http://www.tylermw.com/throwing-shade/) and in this [follow-up](http://www.tylermw.com/making-beautiful-maps/).
 
 ``` r
 devtools::install_github("tylermorganwall/rayshader")
