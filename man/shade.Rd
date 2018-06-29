@@ -35,7 +35,7 @@ units. Default value is 200 map units.}
 
 \item{light_intensity}{Boolean value indicating if Lambertian reflectance shoud be used to
 determine surfaces facing directly to sun. Default value is \code{FALSE}. Package
-\link[rayshader]{rayshade} names this parameter \code{lambert}.}
+\link[rayshader]{ray_shade} names this parameter \code{lambert}.}
 
 \item{verbose}{Should informative message be printed? Default \code{FALSE}.}
 }
@@ -43,7 +43,7 @@ determine surfaces facing directly to sun. Default value is \code{FALSE}. Packag
 Object of class \linkS4class{Raster}.
 }
 \description{
-This function is just a wrapper around \link[rayshader]{rayshade} that supports
+This function is just a wrapper around \link[rayshader]{ray_shade} that supports
 directly using \linkS4class{Raster} in the function. The function also tries to set
 "reasonable" default values for parameters.
 }

@@ -1,6 +1,6 @@
 #' @title Function for calculation of rayshade on raster data
 #'
-#' @description This function is just a wrapper around \link[rayshader]{rayshade} that supports
+#' @description This function is just a wrapper around \link[rayshader]{ray_shade} that supports
 #' directly using \linkS4class{Raster} in the function. The function also tries to set
 #' "reasonable" default values for parameters.
 #'
@@ -24,7 +24,7 @@
 #' units. Default value is 200 map units.
 #' @param light_intensity Boolean value indicating if Lambertian reflectance shoud be used to
 #' determine surfaces facing directly to sun. Default value is \code{FALSE}. Package
-#' \link[rayshader]{rayshade} names this parameter \code{lambert}.
+#' \link[rayshader]{ray_shade} names this parameter \code{lambert}.
 #' @param verbose Should informative message be printed? Default \code{FALSE}.
 #'
 #' @return Object of class \linkS4class{Raster}.
@@ -33,7 +33,7 @@
 #' @importFrom sp CRS SpatialPoints coordinates spTransform is.projected bbox
 #' @importFrom raster bandnr crs values<- as.matrix
 #' @importFrom suncalc getSunlightPosition getSunlightTimes
-#' @importFrom rayshader rayshade
+#' @importFrom rayshader ray_shade
 #' @importFrom lubridate ymd hms ymd_hms with_tz is.period
 #'
 shade <- function(surface_raster, date, time, tzone, sun_elevation, sun_azimuth, search_distance,
@@ -232,6 +232,8 @@ shade.RasterLayer <- function(surface_raster, date, time, tzone, sun_elevation, 
                      with_tz(date_time, tzone = "UTC"),
                      " in UTC timezone."))
     }
+  }else{
+    sun_azimuth <- sun_azimuth - 90
   }
   #-----------------------------------
 
@@ -273,7 +275,7 @@ shade.RasterLayer <- function(surface_raster, date, time, tzone, sun_elevation, 
 
   matrix <- as.matrix(surface_raster)
 
-  shadow_matrix <- rayshade(matrix,
+  shadow_matrix <- ray_shade(matrix,
                       anglebreaks = sun_elevation,
                       sunangle = sun_azimuth,
                       maxsearch = search_distance,
