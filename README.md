@@ -40,6 +40,7 @@ Raster shading using lambert method:
 
 ``` r
 shadow_raster <- shade_lambert(raster, only_facing_sun = TRUE, verbose = TRUE)
+
 writeRaster(shadow_raster, "equinox_noon_lambert.tif", overwrite = TRUE)
 ```
 
