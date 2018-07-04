@@ -48,63 +48,24 @@ get_sun_position <- function(date, time, tzone = "UTC", lat, lon){
                 lon, ") is not from this range."))
   }
 
-  # date string must be valid date
-  if (is.na(ymd(date, quiet = TRUE))) {
-    stop(paste0("Provided date, \"", date,"\" can not be converted to date.",
-                " Is it in format YYYY-MM-DD?"),
-         call. = FALSE)
-  }else{
-    date <- ymd(date)
-  }
+  date <- .check_date(date)
 
-  # recode time string to valid variants for
-  # getSunlightTimes function
-  if (is.na(hms(time, quiet = TRUE))) {
-    # check if sun elevation string is a valid one
-    if (time %in% c("noon", "sunrise", "sunset", "goldenHour", "goldenHourEnd")) {
-      if (time == "noon") {
-        time <- "solarNoon"
-      }
-
-      if (time == "sunrise") {
-        time <- "sunriseEnd"
-      }
-
-      if (time == "sunset") {
-        time <- "sunsetStart"
-      }
-    }
-    else{
-      stop(paste0("Unknown time character: ", time, ". \n",
-                  "Known types are: noon, sunrise, sunset, goldenHour, goldenHourEnd."),
-           call. = FALSE)
-    }
-  }else{
-    time <- hms(time, quiet = TRUE)
-  }
+  time <- .check_time(time)
 
   # if time is given as string calculate
   # real time of the event
   if (is.character(time)) {
-    time <- getSunlightTimes(date = date,
-                             lat = lat, lon = lon,
-                             keep = c(time))
-    time <- time[,4]
+    time <- .get_time_event(time, date, lat, lon)
   }
 
-  # if time is specified as time then use it with timezone
-  if (is.period(time)) {
-    date_time <- ymd_hms(paste(date, time), tz = tzone)
-  }else{
-    date_time <- ymd_hms(time, tz = "UTC")
-  }
+  date_time <- .check_time_tzone(time, date, tzone)
 
   # sun position
   sun_pos <- getSunlightPosition(date = with_tz(date_time, tzone = "UTC"),
                                  lat = lat, lon = lon)
 
   # recalculation into degrees and correct (north) orientation of azimuth
-  sun_elevation <- (sun_pos$altitude * (180/pi))
+  sun_elevation <- sun_pos$altitude * (180/pi)
 
   sun_azimuth <- sun_pos$azimuth * (180/pi)
 
