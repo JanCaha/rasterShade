@@ -18,26 +18,34 @@ devtools::install_github("JanCaha/rasterShade")
 
 ## Example
 
-The simple example showing calculation of global shadows on digital surface model:
+Loading the libraries and preparing data:
 
 ``` r
 library(raster)
 library(rasterShade)
 
 raster <- raster("digital_surface_model.tif")
+```
 
+Global shading raster:
+
+``` r
 shadow_raster <- shade_global(raster, date = "2018-05-23", sun_elevation = "noon", 
                               search_distance = 100)
                               
 writeRaster(shadow_raster, "equinox_noon.tif", overwrite = TRUE)
+```
 
+Raster shading using lambert method:
 
-
+``` r
 shadow_raster <- shade_lambert(raster, only_facing_sun = TRUE, verbose = TRUE)
 writeRaster(shadow_raster, "equinox_noon_lambert.tif", overwrite = TRUE)
+```
 
+Raster shading using ambient shadows:
 
-
+``` r
 shadow_raster <- shade_ambient(raster, date = "2018-05-23", sun_elevation = "noon", 
                                rays_number = 36, search_distance = 100)
                                
