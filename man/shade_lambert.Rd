@@ -4,8 +4,8 @@
 \alias{shade_lambert}
 \title{Function for calculation of lambert shading (also known as hillshade in GIS) on raster data}
 \usage{
-shade_lambert(surface_raster, date, time, tzone, sun_elevation, sun_azimuth,
-  only_facing_sun, z_value, verbose)
+shade_lambert(surface_raster, date, time, tzone, sun_elevation,
+  sun_azimuth, only_facing_sun, z_value, verbose)
 }
 \arguments{
 \item{surface_raster}{Object of class \linkS4class{Raster}.}

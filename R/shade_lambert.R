@@ -187,7 +187,7 @@ shade_lambert.RasterLayer <- function(surface_raster, date, time, tzone, sun_ele
                               rayangle = sun_elevation,
                               sunangle = sun_azimuth,
                               zero_negative = only_facing_sun,
-                              remove_edges = FALSE,
+                              # remove_edges = FALSE,
                               zscale = z_value)
 
   values(surface_raster) <- shadow_matrix

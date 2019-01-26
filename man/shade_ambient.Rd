@@ -4,8 +4,8 @@
 \alias{shade_ambient}
 \title{Function for calculation of ambient shading on raster data}
 \usage{
-shade_ambient(surface_raster, date, time, tzone, sun_elevation, rays_number,
-  search_distance, z_value, verbose)
+shade_ambient(surface_raster, date, time, tzone, sun_elevation,
+  rays_number, search_distance, z_value, verbose)
 }
 \arguments{
 \item{surface_raster}{Object of class \linkS4class{Raster}.}
