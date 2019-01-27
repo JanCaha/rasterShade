@@ -196,8 +196,6 @@ shade_global.RasterLayer <- function(surface_raster, date, time, tzone, sun_elev
 
   matrix <- .flip_matrix_horizontally(matrix)
 
-  print(sun_azimuth)
-
   shadow_matrix <- ray_shade(matrix,
                       anglebreaks = sun_elevation,
                       sunangle = sun_azimuth,
