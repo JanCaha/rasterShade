@@ -1,7 +1,7 @@
 Package: rasterShade
 Type: Package
 Title: Wrapper around rayshader package 
-Version: 0.4.1
+Version: 0.4.7
 Date: 2018-06-29
 Authors@R: c(person("Jan", "Caha", email = "cahik@atlas.cz",
   role = c("aut", "cre")))

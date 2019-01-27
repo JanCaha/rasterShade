@@ -31,7 +31,7 @@
 #' @export
 #'
 #' @importFrom sp CRS SpatialPoints coordinates spTransform is.projected bbox
-#' @importFrom raster bandnr crs values<- as.matrix
+#' @importFrom raster bandnr crs values<- as.matrix extract extent
 #' @importFrom suncalc getSunlightPosition getSunlightTimes
 #' @importFrom rayshader ray_shade
 #' @importFrom lubridate ymd hms ymd_hms with_tz is.period
@@ -194,13 +194,17 @@ shade_global.RasterLayer <- function(surface_raster, date, time, tzone, sun_elev
 
   matrix <- as.matrix(surface_raster)
 
+  matrix <- .flip_matrix_horizontally(matrix)
+
+  print(sun_azimuth)
+
   shadow_matrix <- ray_shade(matrix,
                       anglebreaks = sun_elevation,
                       sunangle = sun_azimuth,
                       maxsearch = search_distance,
                       lambert = FALSE,
                       multicore = TRUE,
-                      remove_edges = FALSE,
+                      # remove_edges = FALSE,
                       zscale = z_value)
 
   values(surface_raster) <- shadow_matrix

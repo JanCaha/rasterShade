@@ -30,7 +30,7 @@
 #' @export
 #'
 #' @importFrom sp CRS SpatialPoints coordinates spTransform is.projected bbox
-#' @importFrom raster bandnr crs values<- as.matrix
+#' @importFrom raster bandnr crs values<- as.matrix extract extent
 #' @importFrom suncalc getSunlightPosition getSunlightTimes
 #' @importFrom rayshader ambient_shade
 #' @importFrom lubridate ymd hms ymd_hms with_tz is.period
@@ -174,6 +174,8 @@ shade_ambient.RasterLayer <- function(surface_raster, date, time, tzone, sun_ele
   #-----------------------------------
 
   matrix <- as.matrix(surface_raster)
+
+  matrix <- .flip_matrix_horizontally(matrix)
 
   shadow_matrix <- ambient_shade(matrix,
                              anglebreaks = sun_elevation,

@@ -35,3 +35,9 @@
 
   return(search_distance)
 }
+
+# flips matrix to fit the raster
+# idea taken from https://github.com/gtatters/Thermimage/blob/master/R/mirror.matrix.R
+.flip_matrix_horizontally <- function(x){
+  as.matrix(rev(as.data.frame(x)))
+}
