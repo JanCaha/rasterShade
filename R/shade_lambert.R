@@ -32,7 +32,7 @@
 #' @export
 #'
 #' @importFrom sp CRS SpatialPoints coordinates spTransform is.projected bbox
-#' @importFrom raster bandnr crs values<- as.matrix extract extent
+#' @importFrom raster bandnr crs values<- as.matrix extract extent mask
 #' @importFrom suncalc getSunlightPosition getSunlightTimes
 #' @importFrom rayshader lamb_shade
 #' @importFrom lubridate ymd hms ymd_hms with_tz is.period
@@ -192,7 +192,11 @@ shade_lambert.RasterLayer <- function(surface_raster, date, time, tzone, sun_ele
                               # remove_edges = FALSE,
                               zscale = z_value)
 
-  values(surface_raster) <- shadow_matrix
+  shade_raster <- surface_raster
 
-  return(surface_raster)
+  values(shade_raster) <- shadow_matrix
+
+  shade_raster <- mask(shade_raster, surface_raster)
+
+  return(shade_raster)
 }
