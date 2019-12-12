@@ -1,0 +1,76 @@
+---
+title: "Example"
+author: "Jan Caha"
+date: "11 12 2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Load necessary packages.
+
+```{r, warning=FALSE, message=FALSE}
+library(raster)
+library(geoviz)
+library(rasterShade)
+library(tmap)
+library(scales)
+library(cartography)
+```
+
+Get digital elevation model for part ot Tatra Mountains (Slovakia).
+
+```{r,  warning=FALSE, message=FALSE}
+dem <- mapzen_dem(lat = 49.16770, long = 20.13074, square_km = 10, width_buffer = 1, max_tiles = 10)
+```
+
+Store the original coordinate reference system (CRS) and project the raster into projected coordinate system, so that the calculation makes sense.
+
+```{r, warning=FALSE, message=FALSE}
+crs_original <- crs(dem)
+
+crs_projected <- CRS("+init=epsg:5514")
+
+dem <- projectRaster(dem, crs = crs_projected)
+```
+
+Calculate global and lambert shade raster.
+
+```{r}
+shade_raster <- shade_global_sun_position(dem, sun_elevation = 25, sun_azimuth = 135)
+shade_lambert_raster <- shade_lambert_sun_position(dem, sun_elevation = 25, sun_azimuth = 135)
+```
+
+Project rasters back to their original CRS for visualization.
+
+```{r, warning=FALSE, message=FALSE}
+dem <- projectRaster(dem, crs = crs_original)
+shade_raster <- projectRaster(shade_raster, crs = crs_original)
+shade_lambert_raster <- projectRaster(shade_lambert_raster, crs = crs_original)
+```
+
+Create color palettes for dem and shadows (including opacity),
+
+```{r}
+surface_pal <- terrain.colors(10)
+
+shadow_pal <- carto.pal("grey.pal", 10)
+```
+
+Merge shadows together.
+```{r}
+shade_together <- shade_raster + shade_lambert_raster 
+```
+
+Create resulting visualization.
+
+```{r}
+tm_shape(dem) +
+  tm_raster(palette = surface_pal, style = "cont") +
+tm_shape(shade_together) +
+  tm_raster(palette = rev(shadow_pal), style = "cont", alpha = 0.5) +
+tm_layout(legend.show = FALSE,
+          frame = "white")
+```
