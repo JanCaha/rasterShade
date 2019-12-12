@@ -4,22 +4,28 @@
 \alias{get_sun_position}
 \title{Extract sun position at given location in specific date and time}
 \usage{
-get_sun_position(date, time, tzone = "UTC", lat, lon)
+get_sun_position(
+  date = lubridate::ymd(Sys.Date()),
+  time = "noon",
+  tzone = "UTC",
+  lat,
+  lon
+)
 }
 \arguments{
-\item{date}{Date specified as \code{character} (in form \code{YYYY-MM-DD}) or output of
-\link[lubridate]{ymd} function.}
+\item{date}{Date specified as \code{character} in form \code{YYYY-MM-DD}. Default value is
+\code{\link{Sys.Date}}.}
 
-\item{time}{either character representation of time (in format \code{HH:MM:SS},
-or output of \link[lubridate]{hms} function)
-or one of text values: \code{"noon", "sunrise", "sunset", "goldenHour", "goldenHourEnd"}.
-The textual representation is used to determine sun elevation using function
-\link[suncalc]{getSunlightPosition}. Value \code{"sunrise"} represents end of sunrise,
-while \code{"sunset"} represents start of sunset.}
+\item{time}{Either character representation of time (in format \code{HH:MM:SS}),
+or \code{\link[hms]{hms}} class, or one of text values:
+\code{"noon", "sunrise", "sunset", "goldenHour", "goldenHourEnd"}. The textual representation is
+used to determine sun elevation using function \code{\link[suncalc]{getSunlightPosition}}. Value
+\code{"sunrise"} represents end of sunrise, while \code{"sunset"} represents start of sunset.
+Default value is \code{"noon"}.}
 
 \item{tzone}{a character string that specifies which time zone to parse the date with.
 The string must be a time zone that is recognized by the user's OS. If no time zone is given the default
-UTC is used.}
+value \code{"UTC"} is used. Default value \code{"UTC"}.}
 
 \item{lat}{latitude of the location. Numeric from range -90,90. Positive values are north
 of the Equator.}

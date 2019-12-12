@@ -18,5 +18,5 @@
 
   refraction <- refraction/3600
 
-  return(refraction)
+  refraction
 }

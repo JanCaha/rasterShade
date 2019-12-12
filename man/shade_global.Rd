@@ -2,42 +2,60 @@
 % Please edit documentation in R/shade_global.R
 \name{shade_global}
 \alias{shade_global}
+\alias{shade_global_date_time}
+\alias{shade_global_sun_position}
 \title{Function for calculation of global shading on raster data}
 \usage{
-shade_global(surface_raster, date, time, tzone, sun_elevation, sun_azimuth,
-  search_distance, z_value, verbose)
+shade_global_date_time(
+  surface_raster,
+  date = as.character(Sys.Date()),
+  time = "noon",
+  tzone = "UTC",
+  search_distance = 200,
+  z_value = 1,
+  verbose = FALSE
+)
+
+shade_global_sun_position(
+  surface_raster,
+  sun_elevation = 45,
+  sun_azimuth = 180,
+  search_distance = 200,
+  z_value = 1,
+  verbose = FALSE
+)
 }
 \arguments{
-\item{surface_raster}{Object of class \linkS4class{Raster}.}
+\item{surface_raster}{Object of class \linkS4class{RasterLayer}.}
 
 \item{date}{Date specified as \code{character} in form \code{YYYY-MM-DD}. Default value is
-spring equinox (2018-03-20), when the sun is in the mean position.}
+\code{\link{Sys.Date}}.}
 
-\item{time}{Either character representation of time (in format \code{HH:MM:SS}) or one of text values:
+\item{time}{Either character representation of time (in format \code{HH:MM:SS}),
+or \code{\link[hms]{hms}} class, or one of text values:
 \code{"noon", "sunrise", "sunset", "goldenHour", "goldenHourEnd"}. The textual representation is
-used to determine sun elevation using function \link[suncalc]{getSunlightPosition}. Value
+used to determine sun elevation using function \code{\link[suncalc]{getSunlightPosition}}. Value
 \code{"sunrise"} represents end of sunrise, while \code{"sunset"} represents start of sunset.
 Default value is \code{"noon"}.}
 
 \item{tzone}{a character string that specifies which time zone to parse the date with.
 The string must be a time zone that is recognized by the user's OS. If no time zone is given the default
-UTC is used.}
-
-\item{sun_elevation}{Numeric value, from range 0 - 90, with 0 being sun elevation directly
-on horizon while 90 means that sun is directly above the surface.}
-
-\item{sun_azimuth}{Numeric value that specifies azimuth from which the sun is shining on the
-surface. Value has to be from the range 0 - 360. If not specified the sun azimuth is calculated
-from date and sun elevation.}
+value \code{"UTC"} is used. Default value \code{"UTC"}.}
 
 \item{search_distance}{Distance in which sun blocking objects are searched for, specified in map
-units. Default value is 200 map units.}
+units. Default value is \code{200} map units.}
 
 \item{z_value}{numeric value indicating the scale between xy and z. Typical use is if the distance
 is measured in meters and elevation in foots, in such case the z value needs to be recalculated
-to meters. Default value is 1, which means that both measures use the same units.}
+to meters. Default value is \code{1}, which means that both measures use the same units.}
 
 \item{verbose}{Should informative message be printed? Default \code{FALSE}.}
+
+\item{sun_elevation}{Numeric value, from range 0 - 90, with 0 being sun elevation directly
+on horizon while 90 means that sun is directly above the surface. Default value is \code{45}.}
+
+\item{sun_azimuth}{Numeric value that specifies azimuth from which the sun is shining on the
+surface. Value has to be from the range 0 - 360. Default value is \code{180}.}
 }
 \value{
 Object of class \linkS4class{Raster}.
