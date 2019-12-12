@@ -1,0 +1,45 @@
+name: R-CMD-check
+
+on:
+  push:
+    paths:
+      - R/**
+      - src/**
+      - tests/**
+      - DESCRIPTION
+      - .github/workflows/R-CMD-check.yaml
+
+jobs:
+  R-CMD-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: r-lib/actions/setup-r@master
+
+      - name: Cache R packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ hashFiles('NAMESPACE') }}
+
+      - name: Install Linux libraries
+        run: |
+          sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+          sudo apt-get update
+          sudo apt-get install libudunits2-dev libgdal-dev libgeos-dev libproj-dev
+
+      - name: R dependencies
+        run: |
+          Rscript -e "install.packages(c('remotes', 'rcmdcheck', 'devtools'))"
+          Rscript -e "remotes::install_deps(dependencies = TRUE)"
+
+      - name: Check Package
+        run: Rscript -e "devtools::document(roclets = c('rd', 'collate', 'namespace', 'vignette'))"
+        run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'error', check_dir = 'check')"
+
+      - name: Upload check results
+        if: failure()
+        uses: actions/upload-artifact@master
+        with:
+          name: R-CMD-check-results
+          path: ./check/rasterShade.Rcheck/00check.log
