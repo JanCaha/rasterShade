@@ -34,8 +34,9 @@ jobs:
           Rscript -e "remotes::install_deps(dependencies = TRUE)"
 
       - name: Check Package
-        run: Rscript -e "devtools::document(roclets = c('rd', 'collate', 'namespace', 'vignette'))"
-        run: Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'error', check_dir = 'check')"
+        run: |
+          Rscript -e "devtools::document(roclets = c('rd', 'collate', 'namespace', 'vignette'))"
+          Rscript -e "rcmdcheck::rcmdcheck(args = '--no-manual', error_on = 'error', check_dir = 'check')"
 
       - name: Upload check results
         if: failure()
