@@ -39,7 +39,9 @@ jobs:
           key: ${{ runner.os }}-r-${{ hashFiles('depends.Rds') }}
 
       - name: Print
-        run: Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))"
+        run: |
+          Rscript -e "install.packages('sysreqs')"
+          Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))"
 
       - name: R dependencies
         run: |
